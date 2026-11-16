@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.primefaces.event.SelectEvent;
 
+import configuration.UtilDate;
 import domain.Sale;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -20,6 +21,7 @@ public class QuerySaleBean implements Serializable {
 
 	private String izena;
 	private List<Sale> results;
+	private Sale sale;
 
 	@PostConstruct
 	public void init() {
@@ -32,6 +34,7 @@ public class QuerySaleBean implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "DB not available."));
 			return;
 		}
+		Date today = UtilDate.trim(new Date());
 		this.results = FacadeBean.getBusinessLogic().getSales(izena);
 
 		if (this.results == null || this.results.isEmpty()) {
@@ -59,6 +62,7 @@ public class QuerySaleBean implements Serializable {
 		this.results = results;
 	}
 	public String onEventSelect(SelectEvent event) {
+		sale=(Sale) event.getObject();
 		return "Salezehatz";
 	}
 
