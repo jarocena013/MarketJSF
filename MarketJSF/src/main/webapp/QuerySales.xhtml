@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Query Sale</title>
+    <title>Query Rides</title>
 </h:head>
 <h:body>
-Hemen query sale inplementatuko da.
+    <h:form id="nireForm">
+        <h3>Sale bilatzailea</h3>
+        <h:messages id="mezuak" styleClass="info-msg" globalOnly="true"/>
+
+        <table>
+            <tr>
+                <td>Sale izena:</td>
+                <td>
+                    <h:inputText id="salename" value="#{querySale.izena}" required="true">
+                    </h:inputText>
+                </td>
+                <td><h:message for="salename" style="color:red"/></td>
+            </tr>
+        </table>
+
+        <p>
+            <h:commandButton value="Buscar" action="#{querySale.searchSales()}"/>
+            <h:commandButton value="Close" action="home" immediate="true"
+                             onclick="if (!confirm('Ziur zaude?')) return false"/>
+        </p>
+
+        <h:dataTable value="#{querySale.results}" var="item" border="1"
+                     rendered="#{not empty querySale.results}">
+            <f:facet name="header">Bidaiak / Rides</f:facet>
+            <h:column>
+                <f:facet name="header">Izena</f:facet>
+                #{item.title}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Deskripzioa</f:facet>
+                #{item.description}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Prezioa</f:facet>
+                #{item.price}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Seller</f:facet>
+                #{item.seller.name}
+            </h:column>
+        </h:dataTable>
+    </h:form>
 </h:body>
 </html>

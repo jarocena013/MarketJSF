@@ -2,11 +2,34 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Create Sale</title>
 </h:head>
 <h:body>
 Hemen create sale inplementatuko da.
+<h:form id="salesorrera">
+<h:messages globalOnly="true" style="color:red;" />
+Izena:
+<h:inputText id="izen" value="#{createSale.izena}">
+</h:inputText>
+Deskripzioa:
+<h:inputText id="deskripzio" value="#{createSale.deskripzioa}">
+</h:inputText>
+Prezioa:
+<h:inputText id="prezio" value="#{createSale.prezioa}">
+</h:inputText>
+Data:
+<h:outputLabel value="Date (Calendar):" />
+            <p:calendar id="date" value="#{createSale.date}"
+                        label="Publikazio eguna" required="true" showIcon="true" pattern="dd/MM/yyyy" />
+            <h:message for="date" style="color:red" />
+Egoera:
+<h:selectOneMenu id="zerrenda" value="#{createSale.egoera}">
+<f:selectItems value="#{createSale.egoerak}"/>
+</h:selectOneMenu>
+<h:commandButton value="Sortu" action="#{createSale.create()}"/>
+</h:form>
 </h:body>
 </html>
