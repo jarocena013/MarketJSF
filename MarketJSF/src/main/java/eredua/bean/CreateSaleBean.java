@@ -86,7 +86,7 @@ public class CreateSaleBean implements Serializable {
 	}
 
 	public void create() {
-		String email = "seller";
+		String email = "seller1@gmail.com";
 		try {
 			try {
 				int ezenb;
@@ -105,13 +105,13 @@ public class CreateSaleBean implements Serializable {
 				e.printStackTrace();
 			}
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sale created succesfully", null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sale berri bat sortu da arazorik gabe", null));
 		} catch (SaleAlreadyExistException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sale already exists", null));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sale hau dagoeneko existitzen da", null));
 		} catch (MustBeLaterThanTodayException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sale must be later than today", null));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salearen publikazio datak ezin du gaurkoa baino lehenagokoa izan", null));
 		}
 	}
 

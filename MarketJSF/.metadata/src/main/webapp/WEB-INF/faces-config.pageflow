@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17948298126630" configfile="/MarketJSF/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="sarrera" x="122" y="370" id="pf17948298255301" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf17948298255302 pf17948298255313 pf17948298463916" path="/Sarrera.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="CreateSale.xhtml" x="338" y="178" id="pf17948298255314" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf17948298255302" path="/CreateSale.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="QuerySales.xhtml" x="338" y="562" id="pf17948298255315" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf17948298255313" path="/QuerySales.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="SaleZehatz.xhtml" id="pf17948298463927" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf17948298463916" path="/SaleZehatz.xhtml"/>
+  <links id="pf17948298255302" target="pf17948298255314" source="pf17948298255301" outcome="createSale"/>
+  <links id="pf17948298255313" target="pf17948298255315" source="pf17948298255301" outcome="querySales"/>
+  <links id="pf17948298463916" target="pf17948298463927" source="pf17948298255301" outcome="salezehatz"/>
+</pageflow:Pageflow>

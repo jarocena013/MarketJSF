@@ -3,6 +3,9 @@ package eredua.bean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import org.primefaces.event.SelectEvent;
+
 import domain.Sale;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -54,6 +57,9 @@ public class QuerySaleBean implements Serializable {
 
 	public void setResults(List<Sale> results) {
 		this.results = results;
+	}
+	public String onEventSelect(SelectEvent event) {
+		return "Salezehatz";
 	}
 
 }

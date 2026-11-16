@@ -1,54 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Query Rides</title>
+	<title>Query Rides</title>
 </h:head>
 <h:body>
-    <h:form id="nireForm">
-        <h3>Sale bilatzailea</h3>
-        <h:messages id="mezuak" styleClass="info-msg" globalOnly="true"/>
+	<h:form id="nireForm">
+		<h3>Sale bilatzailea</h3>
+		<h:messages id="mezuak" styleClass="info-msg" globalOnly="true" />
 
-        <table>
-            <tr>
-                <td>Sale izena:</td>
-                <td>
-                    <h:inputText id="salename" value="#{querySale.izena}" required="true">
-                    </h:inputText>
-                </td>
-                <td><h:message for="salename" style="color:red"/></td>
-            </tr>
-        </table>
+		<table>
+			<tr>
+				<td>Sale izena:</td>
+				<td><h:inputText id="salename" value="#{querySale.izena}"
+						required="true">
+					</h:inputText></td>
+				<td><h:message for="salename" style="color:red" /></td>
+			</tr>
+		</table>
 
-        <p>
-            <h:commandButton value="Buscar" action="#{querySale.searchSales()}"/>
-            <h:commandButton value="Close" action="home" immediate="true"
-                             onclick="if (!confirm('Ziur zaude?')) return false"/>
-        </p>
-
-        <h:dataTable value="#{querySale.results}" var="item" border="1"
-                     rendered="#{not empty querySale.results}">
-            <f:facet name="header">Bidaiak / Rides</f:facet>
-            <h:column>
-                <f:facet name="header">Izena</f:facet>
+		<p>
+			<h:commandButton value="Buscar" action="#{querySale.searchSales()}" />
+			<h:commandButton value="Close" action="Sarrera.xhtml" immediate="true"
+				onclick="if (!confirm('Ziur zaude?')) return false" />
+		</p>
+		<!-- <h:dataTable value="#{querySale.results}" var="item" border="1"
+			rendered="#{not empty querySale.results}">
+			<f:facet name="header">Bidaiak / Rides</f:facet>
+			<h:column>
+				<f:facet name="header">Izena</f:facet>
                 #{item.title}
             </h:column>
-            <h:column>
-                <f:facet name="header">Deskripzioa</f:facet>
+			<h:column>
+				<f:facet name="header">Deskripzioa</f:facet>
                 #{item.description}
             </h:column>
-            <h:column>
-                <f:facet name="header">Prezioa</f:facet>
+			<h:column>
+				<f:facet name="header">Prezioa</f:facet>
                 #{item.price}
             </h:column>
-            <h:column>
-                <f:facet name="header">Seller</f:facet>
+			<h:column>
+				<f:facet name="header">Seller</f:facet>
                 #{item.seller.name}
             </h:column>
-        </h:dataTable>
-    </h:form>
+		</h:dataTable> -->
+		
+		<p:dataTable id="saletaula" value="#{querySale.results}" var="item"
+			selectionMode="single"  border="1"
+			rowKey="#{item.saleNumber}">
+			<p:ajax event="rowSelect" listener="#{querySale.onEventSelect}"
+				update=":nireForm:mezuak"></p:ajax>
+			<f:facet name="header">Izen horrekin aurkitutako Saleak:</f:facet>
+			<p:column headerText="Izena">#{item.title}</p:column>
+			<p:column headerText="Deskripzioa">#{item.description}</p:column>
+			<p:column headerText="Prezioa">#{item.price}</p:column>
+			<p:column headerText="Seller izena">#{item.seller.name}</p:column>
+		</p:dataTable>
+	</h:form>
 </h:body>
 </html>

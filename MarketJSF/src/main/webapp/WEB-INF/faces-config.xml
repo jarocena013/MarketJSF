@@ -12,7 +12,7 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 	</application>
 
 	<navigation-rule>
-		<display-name>Sarrera.xhtml</display-name>
+		<display-name>sarrera</display-name>
 		<from-view-id>/Sarrera.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>createSale</from-outcome>
@@ -21,6 +21,10 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		<navigation-case>
 			<from-outcome>querySales</from-outcome>
 			<to-view-id>/QuerySales.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>salezehatz</from-outcome>
+			<to-view-id>/SaleZehatz.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
