@@ -9,7 +9,7 @@
 </h:head>
 <h:body>
 
-	<h:form id="salesorrera">
+	<h:form id="salesorrera" enctype="multipart/form-data">
 
 		<p:panelGrid columns="3">
 			<h:outputLabel for="izen" value="Izena:" />
@@ -38,9 +38,13 @@
 				<f:selectItems value="#{createSale.egoerak}" />
 			</h:selectOneMenu>
 			<h:message for="zerrenda" style="color:red" />
-			<!-- <h:outputLabel for="argazkia" value="Irudia:" />
-    <p:fileUpload id="argazkia" value="#{createSale.uploadedFile}" mode="simple" skinSimple="true" label="Aukeratu fitxategia" />
-    <h:message for="argazkia" style="color:red" /> -->
+			<h:outputLabel for="argazkia" value="Irudia:" />
+
+			<p:fileUpload id="argazkia" value="#{createSale.uploadedFile}"
+				mode="simple" skinSimple="true" label="Aukeratu irudia"
+				accept="image/*" />
+
+			<h:message for="argazkia" style="color:red" />
 
 		</p:panelGrid>
 
@@ -48,6 +52,7 @@
 			ajax="false" />
 		<h:commandButton value="Itxi" action="Sarrera.xhtml" immediate="true"
 			onclick="if (!confirm('Ziur zaude?')) return false" />
+		<h:messages globalOnly="true" style="color:red;" />
 	</h:form>
 </h:body>
 </html>

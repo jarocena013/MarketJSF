@@ -27,10 +27,10 @@
 			<h:outputText value="Seller izena:" style="font-weight:bold;" />
 			<h:outputText value="#{querySale.sale.seller.name}" />
 
-			<!-- IRUDIA ERAKUSTEKO ZUTABEA -->
 			<h:outputText value="Irudia:" style="font-weight:bold;" />
-			<h:graphicImage value="/resources/images/kamiseta.jpg"
-				width="200" alt="Irudirik ez" />
+
+			<p:graphicImage value="#{querySale.image}" width="200" cache="false"
+				alt="Irudirik ez" />
 
 		</h:panelGrid>
 
