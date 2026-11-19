@@ -17,6 +17,14 @@ import jakarta.inject.Named;
 @Named("querySale")
 @SessionScoped
 public class QuerySaleBean implements Serializable {
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private String izena;
@@ -61,9 +69,15 @@ public class QuerySaleBean implements Serializable {
 	public void setResults(List<Sale> results) {
 		this.results = results;
 	}
-	public String onEventSelect(SelectEvent event) {
-		sale=(Sale) event.getObject();
-		return "Salezehatz";
+
+	public String xehetasunakIkusi() {
+		if (this.sale == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Abisua", "Mesedez, hautatu sale bat taulatik."));
+			return null; // Ez da orriz aldatuko hautapenik ez badago
+		}
+
+		return "SaleZehatz.xhtml";
 	}
 
 }

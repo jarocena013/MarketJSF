@@ -5,31 +5,49 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Create Sale</title>
+	<title>Create Sale</title>
 </h:head>
 <h:body>
-Hemen create sale inplementatuko da.
-<h:form id="salesorrera">
-<h:messages globalOnly="true" style="color:red;" />
-Izena:
-<h:inputText id="izen" value="#{createSale.izena}">
-</h:inputText>
-Deskripzioa:
-<h:inputText id="deskripzio" value="#{createSale.deskripzioa}">
-</h:inputText>
-Prezioa:
-<h:inputText id="prezio" value="#{createSale.prezioa}">
-</h:inputText>
-Data:
-<h:outputLabel value="Date (Calendar):" />
-            <p:calendar id="date" value="#{createSale.date}"
-                        label="Publikazio eguna" required="true" showIcon="true" pattern="dd/MM/yyyy" />
-            <h:message for="date" style="color:red" />
-Egoera:
-<h:selectOneMenu id="zerrenda" value="#{createSale.egoera}">
-<f:selectItems value="#{createSale.egoerak}"/>
-</h:selectOneMenu>
-<h:commandButton value="Sortu" action="#{createSale.create()}"/>
-</h:form>
+
+	<h:form id="salesorrera">
+
+		<p:panelGrid columns="3">
+			<h:outputLabel for="izen" value="Izena:" />
+			<h:inputText id="izen" value="#{createSale.izena}" required="true" />
+			<h:message for="izen" style="color:red" />
+
+			<h:outputLabel for="deskripzio" value="Deskripzioa:" />
+			<h:inputText id="deskripzio" value="#{createSale.deskripzioa}"
+				required="true" />
+			<h:message for="deskripzio" style="color:red" />
+
+			<h:outputLabel for="prezio" value="Prezioa:" />
+			<h:inputText id="prezio" value="#{createSale.prezioa}"
+				required="true" />
+			<h:message for="prezio" style="color:red" />
+
+			<h:outputLabel for="date" value="Date (Calendar):" />
+			<p:calendar id="date" value="#{createSale.date}"
+				label="Publikazio eguna" required="true" showIcon="true"
+				pattern="dd/MM/yyyy" />
+			<h:message for="date" style="color:red" />
+
+			<h:outputLabel for="zerrenda" value="Egoera:" />
+			<h:selectOneMenu id="zerrenda" value="#{createSale.egoera}"
+				required="true">
+				<f:selectItems value="#{createSale.egoerak}" />
+			</h:selectOneMenu>
+			<h:message for="zerrenda" style="color:red" />
+			<!-- <h:outputLabel for="argazkia" value="Irudia:" />
+    <p:fileUpload id="argazkia" value="#{createSale.uploadedFile}" mode="simple" skinSimple="true" label="Aukeratu fitxategia" />
+    <h:message for="argazkia" style="color:red" /> -->
+
+		</p:panelGrid>
+
+		<p:commandButton value="Sortu" action="#{createSale.create()}"
+			ajax="false" />
+		<h:commandButton value="Itxi" action="Sarrera.xhtml" immediate="true"
+			onclick="if (!confirm('Ziur zaude?')) return false" />
+	</h:form>
 </h:body>
 </html>

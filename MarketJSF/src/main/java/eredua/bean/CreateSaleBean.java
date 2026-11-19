@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import businessLogic.BLFacade;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.ParamNullException;
@@ -12,10 +11,8 @@ import exceptions.SaleAlreadyExistException;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
- 
+import org.primefaces.model.file.UploadedFile;
 
 @Named("createSale")
 @SessionScoped
@@ -28,6 +25,7 @@ public class CreateSaleBean implements Serializable {
 	private Date date;
 	private List<String> egoerak;
 	private String egoera;
+	private UploadedFile uploadedFile; // Irudia jasotzeko aldagaia
 
 	public String getIzena() {
 		return izena;
@@ -64,6 +62,7 @@ public class CreateSaleBean implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	public List<String> getEgoerak() {
 		egoerak = new ArrayList<String>();
 		egoerak.add("Berria");
@@ -71,11 +70,11 @@ public class CreateSaleBean implements Serializable {
 		egoerak.add("Egokia");
 		egoerak.add("Zaharra");
 		return egoerak;
-		}
-	public void setEgoerak(List<String> egoerak) {
-	 this.egoerak = egoerak;
 	}
-	
+
+	public void setEgoerak(List<String> egoerak) {
+		this.egoerak = egoerak;
+	}
 
 	public String getEgoera() {
 		return egoera;
@@ -85,34 +84,54 @@ public class CreateSaleBean implements Serializable {
 		this.egoera = egoera;
 	}
 
+	public UploadedFile getUploadedFile() {
+		return uploadedFile;
+	}
+
+	public void setUploadedFile(UploadedFile uploadedFile) {
+		this.uploadedFile = uploadedFile;
+	}
+
 	public void create() {
 		String email = "seller1@gmail.com";
 		try {
-			try {
-				int ezenb;
-				if(egoera.equals("Berria")) {
-					ezenb=1;
-				}else if(egoera.equals("Oso ona")) {
-					ezenb=2;
-				}else if(egoera.equals("Egokia")) {
-					ezenb=3;
-				}else {
-					ezenb=4;
-				}
-				FacadeBean.getBusinessLogic().createSale(izena, deskripzioa, ezenb, prezioa, date, email, null);
-			} catch (ParamNullException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			int ezenb;
+			if (egoera.equals("Berria")) {
+				ezenb = 1;
+			} else if (egoera.equals("Oso ona")) {
+				ezenb = 2;
+			} else if (egoera.equals("Egokia")) {
+				ezenb = 3;
+			} else {
+				ezenb = 4;
 			}
+
+			// UploadedFile fitxategitik java.io.File bat sortu
+			java.io.File targetFile = null;
+			if (uploadedFile != null && uploadedFile.getFileName() != null && !uploadedFile.getFileName().isEmpty()) {
+				// Sortu behin-behineko fitxategi bat zerbitzarian
+				targetFile = java.io.File.createTempFile("upload_", "_" + uploadedFile.getFileName());
+
+				// Igotako fitxategiaren edukiak transferitu java.io.File horretara
+				try (java.io.InputStream input = uploadedFile.getInputStream();
+						java.io.OutputStream out = new java.io.FileOutputStream(targetFile)) {
+					byte[] buffer = new byte[1024];
+					int length;
+					while ((length = input.read(buffer)) > 0) {
+						out.write(buffer, 0, length);
+					}
+				}
+			}
+
+			// Orain java.io.File (targetFile) pasatzen diogu createSale metodoari
+			FacadeBean.getBusinessLogic().createSale(izena, deskripzioa, ezenb, prezioa, date, email, targetFile);
+
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sale berri bat sortu da arazorik gabe", null));
-		} catch (SaleAlreadyExistException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sale hau dagoeneko existitzen da", null));
-		} catch (MustBeLaterThanTodayException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salearen publikazio datak ezin du gaurkoa baino lehenagokoa izan", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Errorea salmenta sortzean: " + e.getMessage(), null));
 		}
 	}
-
 }
